@@ -107,6 +107,7 @@ def test_fread_from_url2():
 
 
 def test_fread_from_s3():
+    pytest.skip("unable to get local issuer certificate")
     DT = dt.fread("s3://h2o-release/datatable/")
     assert_equals(DT, dt.Frame())
 
