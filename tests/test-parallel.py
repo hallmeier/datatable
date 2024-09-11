@@ -46,6 +46,7 @@ def test_core_parallel(testname):
 def test_multiprocessing_threadpool():
     # Verify that threads work properly after forking (#1758)
     import multiprocessing as mp
+    mp.set_start_method("fork")
     from datatable.internal import get_thread_ids
     parent_threads = get_thread_ids()
     n = 4
@@ -123,4 +124,3 @@ def test_progress_interrupt(parallel_type, nthreads):
 
     assert is_cancelled
     assert is_exception
-
