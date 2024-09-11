@@ -243,10 +243,10 @@ class FExpr_Literal_Type : public FExpr {
 
 class FExpr_Literal_Date : public FExpr {
   private:
-    py::odate value_;
+    int value_;
 
   public:
-    explicit FExpr_Literal_Date(py::odate x);
+    explicit FExpr_Literal_Date(int x);
     static ptrExpr make(py::robj src);
 
     Workframe evaluate_n(EvalContext&) const override;

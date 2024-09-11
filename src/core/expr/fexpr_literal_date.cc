@@ -32,13 +32,13 @@ namespace expr {
 // Constructors
 //------------------------------------------------------------------------------
 
-FExpr_Literal_Date::FExpr_Literal_Date(py::odate x)
+FExpr_Literal_Date::FExpr_Literal_Date(int x)
   : value_(x) {}
 
 
 ptrExpr FExpr_Literal_Date::make(py::robj src) {
   py::odate src_date = src.to_odate();
-  return ptrExpr(new FExpr_Literal_Date(src_date));
+  return ptrExpr(new FExpr_Literal_Date(src_date.get_days()));
 }
 
 
@@ -47,7 +47,7 @@ ptrExpr FExpr_Literal_Date::make(py::robj src) {
 //------------------------------------------------------------------------------
 
 Workframe FExpr_Literal_Date::evaluate_n(EvalContext& ctx) const {
-  return Workframe(ctx, Const_ColumnImpl::make_int_column(1, value_.get_days(), SType::DATE32));
+  return Workframe(ctx, Const_ColumnImpl::make_int_column(1, value_, SType::DATE32));
 }
 
 
@@ -58,7 +58,7 @@ Workframe FExpr_Literal_Date::evaluate_n(EvalContext& ctx) const {
 //
 Workframe FExpr_Literal_Date::evaluate_r(EvalContext& ctx, const sztvec&) const
 {
-  return Workframe(ctx, Const_ColumnImpl::make_int_column(1, value_.get_days(), SType::DATE32));
+  return Workframe(ctx, Const_ColumnImpl::make_int_column(1, value_, SType::DATE32));
 }
 
 
@@ -104,7 +104,7 @@ int FExpr_Literal_Date::precedence() const noexcept {
 std::string FExpr_Literal_Date::repr() const {
   char ch[11];
   char* pch = ch;
-  date32_toa(&pch, value_.get_days());
+  date32_toa(&pch, value_);
   return std::string(ch);
 }
 
