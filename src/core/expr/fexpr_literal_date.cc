@@ -20,10 +20,10 @@
 // IN THE SOFTWARE.
 //------------------------------------------------------------------------------
 #include "column/const.h"
-#include "expr/fexpr_literal.h"
+#include "csv/toa.h"
 #include "expr/eval_context.h"
+#include "expr/fexpr_literal.h"
 #include "expr/workframe.h"
-#include "ltype.h"
 namespace dt {
 namespace expr {
 
@@ -32,95 +32,81 @@ namespace expr {
 // Constructors
 //------------------------------------------------------------------------------
 
-FExpr_Literal_Float::FExpr_Literal_Float(double x)
+FExpr_Literal_Date::FExpr_Literal_Date(py::odate x)
   : value_(x) {}
 
 
-ptrExpr FExpr_Literal_Float::make(py::robj src) {
-  double x = src.to_double();
-  return ptrExpr(new FExpr_Literal_Float(x));
+ptrExpr FExpr_Literal_Date::make(py::robj src) {
+  py::odate src_date = src.to_odate();
+  return ptrExpr(new FExpr_Literal_Date(src_date));
 }
 
 
-
 //------------------------------------------------------------------------------
-// Evaluation
+// Evaluators
 //------------------------------------------------------------------------------
 
-Workframe FExpr_Literal_Float::evaluate_n(EvalContext& ctx) const {
-  return Workframe(ctx, Const_ColumnImpl::make_float_column(1, value_));
+Workframe FExpr_Literal_Date::evaluate_n(EvalContext& ctx) const {
+  return Workframe(ctx, Const_ColumnImpl::make_int_column(1, value_.get_days(), SType::DATE32));
 }
 
 
-// A float is assigned to a DT[i,j] expression:
+// A date is used as a replacement target. This is valid
+// only if `j` column(s) have stype DATE32.
 //
-//   DT[:, j] = -1
+//   DT[:, j] = datetime.date(2024, 9, 10)
 //
-// The `j` columns must be float.
-//
-Workframe FExpr_Literal_Float::evaluate_r(
-    EvalContext& ctx, const sztvec& indices) const
+Workframe FExpr_Literal_Date::evaluate_r(EvalContext& ctx, const sztvec&) const
 {
-  auto dt0 = ctx.get_datatable(0);
-
-  Workframe outputs(ctx);
-  for (size_t i : indices) {
-    SType stype;
-    if (i < dt0->ncols()) {
-      const Column& col = dt0->get_column(i);
-      stype = (col.ltype() == LType::REAL)? col.stype() : SType::FLOAT64;
-    } else {
-      stype = SType::AUTO;
-    }
-
-    outputs.add_column(
-        Const_ColumnImpl::make_float_column(1, value_, stype),
-        "", Grouping::SCALAR);
-  }
-  return outputs;
+  return Workframe(ctx, Const_ColumnImpl::make_int_column(1, value_.get_days(), SType::DATE32));
 }
 
 
-Workframe FExpr_Literal_Float::evaluate_f(EvalContext&, size_t) const {
-  throw TypeError() << "A float cannot be used as a column selector";
+Workframe FExpr_Literal_Date::evaluate_f(EvalContext&, size_t) const
+{
+  throw TypeError()
+    << "A date cannot be used as a column selector";
 }
 
 
-Workframe FExpr_Literal_Float::evaluate_j(EvalContext&) const {
-  throw TypeError() << "A float cannot be used as a column selector";
+
+Workframe FExpr_Literal_Date::evaluate_j(EvalContext&) const
+{
+  throw TypeError()
+    << "A date cannot be used as a column selector";
 }
 
 
-RowIndex FExpr_Literal_Float::evaluate_i(EvalContext&) const {
-  throw TypeError() << "A float cannot be used as a row selector";
+RowIndex FExpr_Literal_Date::evaluate_i(EvalContext&) const {
+  throw TypeError() << "A date cannot be used as a row selector";
 }
 
 
-RiGb FExpr_Literal_Float::evaluate_iby(EvalContext&) const {
-  throw TypeError() << "A float cannot be used as a row selector";
+RiGb FExpr_Literal_Date::evaluate_iby(EvalContext&) const {
+  throw TypeError() << "A date cannot be used as a row selector";
 }
-
 
 
 //------------------------------------------------------------------------------
 // Other methods
 //------------------------------------------------------------------------------
 
-Kind FExpr_Literal_Float::get_expr_kind() const {
-  return Kind::Float;
+Kind FExpr_Literal_Date::get_expr_kind() const {
+  return Kind::Date;
 }
 
 
-int FExpr_Literal_Float::precedence() const noexcept {
+int FExpr_Literal_Date::precedence() const noexcept {
   return 18;
 }
 
 
-std::string FExpr_Literal_Float::repr() const {
-  return std::to_string(value_);
+std::string FExpr_Literal_Date::repr() const {
+  char ch[11];
+  char* pch = ch;
+  date32_toa(&pch, value_.get_days());
+  return std::string(ch);
 }
-
-
 
 
 }}  // namespace dt::expr

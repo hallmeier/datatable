@@ -147,7 +147,7 @@ def test_j_integer_wrong(dt0):
         "Column index -5 is invalid for a Frame with 4 columns")
     assert_typeerror(
         dt0, 10**30,
-        "A floating-point value cannot be used as a column selector")
+        "A float cannot be used as a column selector")
 
 
 
@@ -545,19 +545,19 @@ def test_j_bad_arguments(dt0):
     """
     assert_typeerror(
         dt0, 1.000001,
-        "A floating-point value cannot be used as a column selector")
+        "A float cannot be used as a column selector")
     assert_typeerror(dt0,
         slice(1, 2, "A"),
         "slice(1, 2, 'A') is neither integer- nor string- valued")
     assert_typeerror(
         dt0, [0, 0.5, 1],
-        "A floating value cannot be used as a column selector")
+        "A float cannot be used as a column selector")
     assert_typeerror(
         dt0, True,
-        "A boolean value cannot be used as a column selector")
+        "A bool cannot be used as a column selector")
     assert_typeerror(
         dt0, False,
-        "A boolean value cannot be used as a column selector")
+        "A bool cannot be used as a column selector")
 
 
 def test_j_from_view(dt0):

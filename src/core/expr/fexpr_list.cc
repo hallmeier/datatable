@@ -127,6 +127,7 @@ static const char* _name_type(Kind t) {
     case Kind::SliceAll: return "slice";
     case Kind::SliceInt: return "integer slice";
     case Kind::SliceStr: return "string-slice";
+    case Kind::Date:     return "date";
     default:             return "?";
   }
 }
@@ -160,9 +161,9 @@ static Kind _resolve_list_kind(const vecExpr& args) {
     if (kind == Kind::Frame)    kind = Kind::Func;
     if (kind == Kind::SliceInt) kind = Kind::Int;
     if (kind == Kind::SliceStr) kind = Kind::Str;
-    if (kind == Kind::Float) {
+    if (kind == Kind::Float || kind == Kind::Date) {
       throw TypeError()
-        << "A floating value cannot be used as a column selector";
+        << "A " << _name_type(kind) << " cannot be used as a column selector";
     }
     if (kind == Kind::List || kind == Kind::Dict) {
       throw TypeError()

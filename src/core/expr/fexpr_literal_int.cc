@@ -87,7 +87,7 @@ Workframe FExpr_Literal_Int::evaluate_j(EvalContext& ctx) const
 
 
 
-// An integer value is assigned to a DT[i,j] expression:
+// An integer is assigned to a DT[i,j] expression:
 //
 //   DT[:, j] = -1
 //

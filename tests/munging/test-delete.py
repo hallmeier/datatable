@@ -169,7 +169,7 @@ def test_del_cols_exprlist():
 
 def test_delcols_invalid_selector1():
     d0 = smalldt()
-    with pytest.raises(TypeError, match="A floating-point value cannot be used "
+    with pytest.raises(TypeError, match="A float cannot be used "
                                         "as a column selector"):
         del d0[:, 0.5]
 
@@ -182,7 +182,7 @@ def test_del_cols_invalid_selector2():
 
 def test_del_cols_invalid_selector3():
     d0 = smalldt()
-    with pytest.raises(TypeError, match="A floating value cannot be used as a "
+    with pytest.raises(TypeError, match="A float cannot be used as a "
                                         "column selector"):
         del d0[:, [1, 2, 1, 0.7]]
 

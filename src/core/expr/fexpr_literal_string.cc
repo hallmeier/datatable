@@ -65,7 +65,7 @@ Workframe FExpr_Literal_String::evaluate_f(
 
 
 
-// A string value is assigned to a DT[i,j] expression:
+// A string is assigned to a DT[i,j] expression:
 //
 //   DT[:, j] = 'RESIST'
 //
@@ -113,12 +113,12 @@ Workframe FExpr_Literal_String::evaluate_j(EvalContext& ctx) const {
 
 
 RowIndex FExpr_Literal_String::evaluate_i(EvalContext&) const {
-  throw TypeError() << "A string value cannot be used as a row selector";
+  throw TypeError() << "A string cannot be used as a row selector";
 }
 
 
 RiGb FExpr_Literal_String::evaluate_iby(EvalContext&) const {
-  throw TypeError() << "A string value cannot be used as a row selector";
+  throw TypeError() << "A string cannot be used as a row selector";
 }
 
 

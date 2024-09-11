@@ -53,7 +53,7 @@ Workframe FExpr_Literal_Bool::evaluate_n(EvalContext& ctx) const {
 }
 
 
-// A boolean value is used as a replacement target. This is valid
+// A bool is used as a replacement target. This is valid
 // only if `j` column(s) have stype BOOL.
 //
 //   DT[:, j] = True
@@ -67,23 +67,23 @@ Workframe FExpr_Literal_Bool::evaluate_r(EvalContext& ctx, const sztvec&) const
 
 Workframe FExpr_Literal_Bool::evaluate_f(EvalContext&, size_t) const {
   throw TypeError()
-    << "A boolean value cannot be used as a column selector";
+    << "A bool cannot be used as a column selector";
 }
 
 
 Workframe FExpr_Literal_Bool::evaluate_j(EvalContext&) const {
   throw TypeError()
-    << "A boolean value cannot be used as a column selector";
+    << "A bool cannot be used as a column selector";
 }
 
 
 RowIndex FExpr_Literal_Bool::evaluate_i(EvalContext&) const {
-  throw TypeError() << "A boolean value cannot be used as a row selector";
+  throw TypeError() << "A bool cannot be used as a row selector";
 }
 
 
 RiGb FExpr_Literal_Bool::evaluate_iby(EvalContext&) const {
-  throw TypeError() << "A boolean value cannot be used as a row selector";
+  throw TypeError() << "A bool cannot be used as a row selector";
 }
 
 

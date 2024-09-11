@@ -108,7 +108,8 @@ namespace expr {
     Frame,
     SliceAll,
     SliceInt,
-    SliceStr
+    SliceStr,
+    Date
   };
 
 

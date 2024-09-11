@@ -104,6 +104,7 @@ ptrExpr as_fexpr(py::robj src) {
   else if (src.is_numpy_int())     return FExpr_Literal_Int::make(src);
   else if (src.is_numpy_bool())    return FExpr_Literal_Bool::make(src);
   else if (src.is_ellipsis())      return ptrExpr(new FExpr_Literal_SliceAll());
+  else if (src.is_date())          return FExpr_Literal_Date::make(src);
   else {
     throw TypeError() << "An object of type " << src.typeobj()
                       << " cannot be used in an FExpr";
@@ -233,7 +234,7 @@ oobj PyFExpr::nb__pos__() {
 //----- Other methods ----------------------------------------------------------
 
 oobj PyFExpr::extend(const XArgs& args) {
-  auto arg = args[0].to_oobj();   
+  auto arg = args[0].to_oobj();
   return PyFExpr::make(new FExpr_Extend_Remove<true>(ptrExpr(expr_), as_fexpr(arg)));
 
 }
@@ -248,7 +249,7 @@ DECLARE_METHOD(&PyFExpr::extend)
 
 
 oobj PyFExpr::remove(const XArgs& args) {
-  auto arg = args[0].to_oobj();   
+  auto arg = args[0].to_oobj();
   return PyFExpr::make(new FExpr_Extend_Remove<false>(ptrExpr(expr_), as_fexpr(arg)));
 
 }

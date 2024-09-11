@@ -872,13 +872,13 @@ def test_rows_bad_arguments(dt0):
     Test row selectors that are invalid (i.e. not of the types listed above).
     """
     assert_typeerror(
-        dt0, 0.5, "A floating-point value cannot be used as a row selector")
+        dt0, 0.5, "A float cannot be used as a row selector")
     assert_typeerror(
-        dt0, "59", "A string value cannot be used as a row selector")
+        dt0, "59", "A string cannot be used as a row selector")
     assert_typeerror(
-        dt0, True, "A boolean value cannot be used as a row selector")
+        dt0, True, "A bool cannot be used as a row selector")
     assert_typeerror(
-        dt0, False, "A boolean value cannot be used as a row selector")
+        dt0, False, "A bool cannot be used as a row selector")
 
 
 def test_issue689(tempfile_jay):
