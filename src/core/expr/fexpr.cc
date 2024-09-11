@@ -105,6 +105,7 @@ ptrExpr as_fexpr(py::robj src) {
   else if (src.is_numpy_bool())    return FExpr_Literal_Bool::make(src);
   else if (src.is_ellipsis())      return ptrExpr(new FExpr_Literal_SliceAll());
   else if (src.is_date())          return FExpr_Literal_Date::make(src);
+  else if (src.is_datetime())      return FExpr_Literal_Datetime::make(src);
   else {
     throw TypeError() << "An object of type " << src.typeobj()
                       << " cannot be used in an FExpr";

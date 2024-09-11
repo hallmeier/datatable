@@ -922,6 +922,14 @@ odate _obj::to_odate(const error_manager& em) const {
 }
 
 
+odatetime _obj::to_odatetime(const error_manager& em) const {
+  if (is_datetime()) {
+    return odatetime::unchecked(v);
+  }
+  throw em.error_not_date(v);
+}
+
+
 //------------------------------------------------------------------------------
 // Object conversions
 //------------------------------------------------------------------------------

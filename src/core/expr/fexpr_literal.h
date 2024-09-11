@@ -262,6 +262,27 @@ class FExpr_Literal_Date : public FExpr {
 };
 
 
+class FExpr_Literal_Datetime : public FExpr {
+  private:
+    py::odatetime value_;
+
+  public:
+    explicit FExpr_Literal_Datetime(py::odatetime x);
+    static ptrExpr make(py::robj src);
+
+    Workframe evaluate_n(EvalContext&) const override;
+    Workframe evaluate_f(EvalContext&, size_t) const override;
+    Workframe evaluate_j(EvalContext&) const override;
+    Workframe evaluate_r(EvalContext&, const sztvec&) const override;
+    RowIndex  evaluate_i(EvalContext&) const override;
+    RiGb      evaluate_iby(EvalContext&) const override;
+
+    int precedence() const noexcept override;
+    std::string repr() const override;
+    Kind get_expr_kind() const override;
+};
+
+
 
 
 

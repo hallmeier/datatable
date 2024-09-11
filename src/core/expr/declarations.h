@@ -109,7 +109,8 @@ namespace expr {
     SliceAll,
     SliceInt,
     SliceStr,
-    Date
+    Date,
+    Datetime
   };
 
 

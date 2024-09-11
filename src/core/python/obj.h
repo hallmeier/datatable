@@ -240,51 +240,52 @@ class _obj {
     bool parse_string_as_time(int64_t*) const;
 
     struct error_manager;  // see below
-    int8_t      to_bool           (const error_manager& = _em0) const;
-    int8_t      to_bool_strict    (const error_manager& = _em0) const;
-    int8_t      to_bool_force     (const error_manager& = _em0) const noexcept;
+    int8_t        to_bool           (const error_manager& = _em0) const;
+    int8_t        to_bool_strict    (const error_manager& = _em0) const;
+    int8_t        to_bool_force     (const error_manager& = _em0) const noexcept;
 
-    int32_t     to_int32          (const error_manager& = _em0) const;
-    int64_t     to_int64          (const error_manager& = _em0) const;
-    int32_t     to_int32_strict   (const error_manager& = _em0) const;
-    int64_t     to_int64_strict   (const error_manager& = _em0) const;
-    size_t      to_size_t         (const error_manager& = _em0) const;
-    py::oint    to_pyint          (const error_manager& = _em0) const;
-    py::oint    to_pyint_force    (const error_manager& = _em0) const noexcept;
+    int32_t       to_int32          (const error_manager& = _em0) const;
+    int64_t       to_int64          (const error_manager& = _em0) const;
+    int32_t       to_int32_strict   (const error_manager& = _em0) const;
+    int64_t       to_int64_strict   (const error_manager& = _em0) const;
+    size_t        to_size_t         (const error_manager& = _em0) const;
+    py::oint      to_pyint          (const error_manager& = _em0) const;
+    py::oint      to_pyint_force    (const error_manager& = _em0) const noexcept;
 
-    double      to_double         (const error_manager& = _em0) const;
-    py::ofloat  to_pyfloat_force  (const error_manager& = _em0) const noexcept;
+    double        to_double         (const error_manager& = _em0) const;
+    py::ofloat    to_pyfloat_force  (const error_manager& = _em0) const noexcept;
 
-    dt::CString to_cstring        (const error_manager& = _em0) const;
-    std::string to_string         (const error_manager& = _em0) const;
-    py::ostring to_pystring_force (const error_manager& = _em0) const noexcept;
+    dt::CString   to_cstring        (const error_manager& = _em0) const;
+    std::string   to_string         (const error_manager& = _em0) const;
+    py::ostring   to_pystring_force (const error_manager& = _em0) const noexcept;
 
-    char**      to_cstringlist    (const error_manager& = _em0) const;
-    strvec      to_stringlist     (const error_manager& = _em0) const;
-    py::olist   to_pylist         (const error_manager& = _em0) const;
-    py::odict   to_pydict         (const error_manager& = _em0) const;
-    py::rdict   to_rdict          (const error_manager& = _em0) const;
-    py::orange  to_orange         (const error_manager& = _em0) const;
-    py::oiter   to_oiter          (const error_manager& = _em0) const;
-    py::oslice  to_oslice         (const error_manager& = _em0) const;
-    py::odate   to_odate          (const error_manager& = _em0) const;
+    char**        to_cstringlist    (const error_manager& = _em0) const;
+    strvec        to_stringlist     (const error_manager& = _em0) const;
+    py::olist     to_pylist         (const error_manager& = _em0) const;
+    py::odict     to_pydict         (const error_manager& = _em0) const;
+    py::rdict     to_rdict          (const error_manager& = _em0) const;
+    py::orange    to_orange         (const error_manager& = _em0) const;
+    py::oiter     to_oiter          (const error_manager& = _em0) const;
+    py::oslice    to_oslice         (const error_manager& = _em0) const;
+    py::odate     to_odate          (const error_manager& = _em0) const;
+    py::odatetime to_odatetime      (const error_manager& = _em0) const;
 
-    py::otuple  to_otuple         (const error_manager& = _em0) const;
-    py::rtuple  to_rtuple_lax     () const;
+    py::otuple    to_otuple         (const error_manager& = _em0) const;
+    py::rtuple    to_rtuple_lax     () const;
 
-    DataTable*  to_datatable      (const error_manager& = _em0) const;
-    py::Frame*  to_pyframe        (const error_manager& = _em0) const;
-    dt::SType   to_stype          (const error_manager& = _em0) const;
-    dt::Type    to_type           (const error_manager& = _em0) const;
-    dt::Type    to_type_force     () const;
-    py::ojoin   to_ojoin_lax      () const;
-    py::oby     to_oby_lax        () const;
-    py::osort   to_osort_lax      () const;
-    py::oupdate to_oupdate_lax    () const;
+    DataTable*    to_datatable      (const error_manager& = _em0) const;
+    py::Frame*    to_pyframe        (const error_manager& = _em0) const;
+    dt::SType     to_stype          (const error_manager& = _em0) const;
+    dt::Type      to_type           (const error_manager& = _em0) const;
+    dt::Type      to_type_force     () const;
+    py::ojoin     to_ojoin_lax      () const;
+    py::oby       to_oby_lax        () const;
+    py::osort     to_osort_lax      () const;
+    py::oupdate   to_oupdate_lax    () const;
 
-    PyObject*   to_pyobject_newref() const noexcept;
-    PyObject*   to_borrowed_ref() const { return v; }
-    PyObject*   get() const { return v; }
+    PyObject*     to_pyobject_newref() const noexcept;
+    PyObject*     to_borrowed_ref() const { return v; }
+    PyObject*     get() const { return v; }
 
     /**
      * `error_manager` is a factory function for different error messages. It
