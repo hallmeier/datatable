@@ -264,10 +264,10 @@ class FExpr_Literal_Date : public FExpr {
 
 class FExpr_Literal_Datetime : public FExpr {
   private:
-    py::odatetime value_;
+    int64_t value_;
 
   public:
-    explicit FExpr_Literal_Datetime(py::odatetime x);
+    explicit FExpr_Literal_Datetime(int64_t x);
     static ptrExpr make(py::robj src);
 
     Workframe evaluate_n(EvalContext&) const override;

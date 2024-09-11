@@ -32,13 +32,13 @@ namespace expr {
 // Constructors
 //------------------------------------------------------------------------------
 
-FExpr_Literal_Datetime::FExpr_Literal_Datetime(py::odatetime x)
+FExpr_Literal_Datetime::FExpr_Literal_Datetime(int64_t x)
   : value_(x) {}
 
 
 ptrExpr FExpr_Literal_Datetime::make(py::robj src) {
   py::odatetime src_datetime = src.to_odatetime();
-  return ptrExpr(new FExpr_Literal_Datetime(src_datetime));
+  return ptrExpr(new FExpr_Literal_Datetime(src_datetime.get_time()));
 }
 
 
@@ -47,7 +47,7 @@ ptrExpr FExpr_Literal_Datetime::make(py::robj src) {
 //------------------------------------------------------------------------------
 
 Workframe FExpr_Literal_Datetime::evaluate_n(EvalContext& ctx) const {
-  return Workframe(ctx, Const_ColumnImpl::make_int_column(1, value_.get_time(), SType::TIME64));
+  return Workframe(ctx, Const_ColumnImpl::make_int_column(1, value_, SType::TIME64));
 }
 
 
@@ -58,7 +58,7 @@ Workframe FExpr_Literal_Datetime::evaluate_n(EvalContext& ctx) const {
 //
 Workframe FExpr_Literal_Datetime::evaluate_r(EvalContext& ctx, const sztvec&) const
 {
-  return Workframe(ctx, Const_ColumnImpl::make_int_column(1, value_.get_time(), SType::TIME64));
+  return Workframe(ctx, Const_ColumnImpl::make_int_column(1, value_, SType::TIME64));
 }
 
 
@@ -104,7 +104,7 @@ int FExpr_Literal_Datetime::precedence() const noexcept {
 std::string FExpr_Literal_Datetime::repr() const {
   char ch[30];
   char* pch = ch;
-  time64_toa(&pch, value_.get_time());
+  time64_toa(&pch, value_);
   return std::string(ch, pch - ch);
 }
 
