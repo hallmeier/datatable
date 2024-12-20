@@ -1199,7 +1199,7 @@ std::string _obj::typestr() const {
 
 
 size_t _obj::get_sizeof() const {
-  return _PySys_GetSizeOf(v);
+  return static_cast<size_t>(PyObject_Size(v));
 }
 
 size_t _obj::get_refcount() const {
