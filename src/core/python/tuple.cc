@@ -108,7 +108,7 @@ void otuple::set(size_t i, oobj&& value) {
 
 
 void otuple::replace(size_t i, const _obj& value) {
-  // Ensure `v->ob_refcnt == 1`, otherwise a call to `PyTuple_SetItem()`
+  // Ensure `Py_REFCNT(v) == 1`, otherwise a call to `PyTuple_SetItem()`
   // will result in a `SystemError`.
   make_editable();
 
@@ -119,7 +119,7 @@ void otuple::replace(size_t i, const _obj& value) {
 
 
 void otuple::replace(size_t i, oobj&& value) {
-  // Ensure `v->ob_refcnt == 1`, otherwise a call to `PyTuple_SetItem()`
+  // Ensure `Py_REFCNT(v) == 1`, otherwise a call to `PyTuple_SetItem()`
   // will result in a `SystemError`.
   make_editable();
 
@@ -137,7 +137,7 @@ void otuple::replace(size_t i, oobj&& value) {
  a call to `PyTuple_SetItem()` will resulst in a `SystemError`.
  */
 void otuple::make_editable() {
-  if (v->ob_refcnt == 1) return;
+  if (Py_REFCNT(v) == 1) return;
   PyObject* v_new = PyTuple_GetSlice(v, 0, PyTuple_Size(v)); // new ref
   if (Py_TYPE(v) != Py_TYPE(v_new)) {
     // When `v` is a namedtuple, we need to adjust python type for `v_new`.
@@ -147,7 +147,7 @@ void otuple::make_editable() {
     Py_INCREF(v_type);
   }
   Py_SETREF(v, v_new);
-  xassert(v->ob_refcnt == 1);
+  xassert(Py_REFCNT(v) == 1);
 }
 
 
